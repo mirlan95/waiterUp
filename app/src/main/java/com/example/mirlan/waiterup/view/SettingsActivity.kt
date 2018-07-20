@@ -28,6 +28,7 @@ class SettingsActivity : AppCompatActivity() {
              Toast.makeText(this, " Тиркеменин ip-адреси өзгөртүрүлдү.",Toast.LENGTH_LONG).show()
             }else {
                Toast.makeText(this, "Талааны толтуруңуз!",Toast.LENGTH_LONG).show()
+
             }
 
         }
