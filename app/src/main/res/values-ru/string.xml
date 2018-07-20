@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">WaiterUp</string>
+        <string name="logIn">Вход</string>
+        <string name="password_hint">Пароль</string>
+        <string name="settings">Настройка</string>
+
+        <string name="newOrder">Новый заказ</string>
+        <string name="clockOrder">Заказ по часовой</string>
+        <string name="openOrder">Текущие заказы</string>
+        <string name="closedOrder">История заказов</string>
+        <string name="logOut">Выход</string>
+        <string name="ru">Русский</string>
+        <string name="kg">Кыргызча</string>
+
+</resources>

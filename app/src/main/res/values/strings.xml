@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">WaiterUp</string>
+    <string name="logIn">Кирүү</string>
+    <string name="password_hint">Сыр сөз</string>
+    <string name="settings">Тууралоолор</string>
+
+    <string name="newOrder">Жаңы заказ</string>
+    <string name="clockOrder">Саат боюнча заказ</string>
+    <string name="openOrder">Бүтө элек заказ</string>
+    <string name="closedOrder">Бүткөн заказ</string>
+    <string name="logOut">Чыгуу</string>
+    <string name="ru">Русский</string>
+    <string name="kg">Кыргызча</string>
+    <string name="host">http://192.168.130.78:8080</string>
+    <string name="hostText">Сервердин IP адресин жазуу керек \n мисал:http://192.168.130.78:8080</string>
+    <string name="updateIp">Жаңылоо</string>
+</resources>
