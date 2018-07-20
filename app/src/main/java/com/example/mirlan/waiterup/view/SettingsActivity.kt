@@ -23,6 +23,7 @@ class SettingsActivity : AppCompatActivity() {
 
         mIpBtn.setOnClickListener {
 
+            
             if(!mApiEdittext.text.toString().isEmpty()){
              SaveSharedPreference.setApiAddress(this, mApiEdittext.text.toString())
              Toast.makeText(this, " Тиркеменин ip-адреси өзгөртүрүлдү.",Toast.LENGTH_LONG).show()
