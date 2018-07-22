@@ -14,5 +14,14 @@
     <string name="kg">Кыргызча</string>
     <string name="host">http://192.168.130.78:8080</string>
     <string name="hostText">Сервердин IP адресин жазуу керек \n мисал:http://192.168.130.78:8080</string>
-    <string name="updateIp">Жаңылоо</string>
+    <string name="update">Жаңылоо</string>
+    <string name="logOutTxt">Тиркемеден чыгуу</string>
+    <string name="logSure">Сиз чын эле тиркемеден чыгууну каалайсызбы?</string>
+    <string name="no">Жок</string>
+    <string name="yes">Оа</string>
+    <string name="checkboxTxt">Сырттан \n заказ</string>
+    <string name="ordering">Заказ берүү</string>
+    <string name="foodEnd">Түгөндү</string>
+    <string name="errorPassword">Сыр сөз туура эмес!</string>
+
 </resources>
