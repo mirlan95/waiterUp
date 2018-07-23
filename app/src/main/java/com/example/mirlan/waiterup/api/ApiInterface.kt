@@ -2,6 +2,7 @@ package com.example.mirlan.waiterup.api
 
 import android.database.Observable
 import com.example.mirlan.waiterup.data.network.Categories
+import com.example.mirlan.waiterup.data.network.Food
 import com.example.mirlan.waiterup.data.network.User
 import com.example.mirlan.waiterup.data.network.Waiter
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
@@ -21,8 +22,14 @@ interface ApiInterface {
     @FormUrlEncoded
     fun logIn(@Field("id") id: Int,
               @Field("password") mPassword: String):Deferred<Waiter>
+
     @GET("categories")
     fun getCategories(): Deferred<List<Categories>>
+
+    @GET("foods")
+    fun getFoods(): Deferred<List<Food>>
+
+
             /*  @GET("/orders{id}")
     fun getQuestions(@Path("id")id:Int,
                      @Query("api_token")examId: Int,

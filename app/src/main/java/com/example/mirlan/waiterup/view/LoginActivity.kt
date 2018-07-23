@@ -20,6 +20,7 @@ import com.example.mirlan.waiterup.data.network.Waiter
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
 import com.example.mirlan.waiterup.utils.LocaleManager
 import com.example.mirlan.waiterup.utils.ProgressDialog
+import org.angmarch.views.NiceSpinner
 
 class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
@@ -32,10 +33,11 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     }
 
     private lateinit var mUserPassword:EditText
-    private var mUserSpinner: Spinner? = null
+    private var mUserSpinner: NiceSpinner? = null
     private var mUserId: Int = 0
     private var mUserName: String? = null
     private var mUserList: ArrayList<User>? = null
+    private var arrayListUsers: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,7 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
          mUserPassword = findViewById(R.id.userPassword)
          mUserSpinner = findViewById(R.id.spinner)
 
-        mUserSpinner!!.onItemSelectedListener = this
+        //mUserSpinner!!.onItemSelectedListener = this
 
         val mButtonLoginIn = findViewById<Button>(R.id.btnLogIn)
 
@@ -80,11 +82,10 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     success = {
 
                         mUserList = ArrayList(it)
-                       // mUserId = it[0].userId
-                       // mUserName = it[0].name
-                        Log.e("EEEE",it[1].name)
+                        arrayListUsers.add(0,resources.getString(R.string.change_spinner_name))
+                        for(i in 0 until mUserList!!.size)
+                            arrayListUsers.add(i+1,it[i].name!!)
                         init()
-
                     }
                     error = {
                       // ProgressDialog.myToast(this,R.string.errorInt.toString())
@@ -95,9 +96,9 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
     private fun init() {
 
-        val spinnerList = ArrayAdapter(this, android.R.layout.simple_spinner_item, mUserList)
-        spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mUserSpinner!!.adapter = spinnerList
+        val spinnerList = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayListUsers)
+        //spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        mUserSpinner!!.setAdapter(spinnerList)
 
     }
     private fun validateUser(dialog: Dialog) {

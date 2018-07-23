@@ -25,5 +25,7 @@
     <string name="errorPassword">Сыр сөз туура эмес!</string>
     <string name="errorInt">Интернет тууралоолорду текшериңиз!</string>
     <string name="auth">Авторизация</string>
+    <string name="alltxt">Баары</string>
+    <string name="change_spinner_name">Атыңызды тандаңыз</string>
 
 </resources>
