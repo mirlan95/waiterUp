@@ -1,35 +1,37 @@
 package com.example.mirlan.waiterup.api
 
+import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import retrofit2.HttpException
 
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
-class Network private constructor() {
-    val result: Api
-
-    init {
-        val httpClient = OkHttpClient()
-        val gson = GsonBuilder().create()
-        val retrofit = Retrofit.Builder()
-                .client(httpClient)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("https:")
-                .build()
-        result = retrofit.create(Api::class.java)
-
+object Network {
+    fun defaultError(t: Throwable) {
+        t.printStackTrace()
     }
 
-    companion object {
-        private var instance: Network? = null
-        val `interface`: Api
-            @Synchronized get() {
-                if (instance == null)
-                    instance = Network()
-                return instance!!.result
+    fun <T> request(call: Deferred<T>, callback: NetworkCallback<T>) {
+        request(call, callback.success, callback.error)
+    }
+
+    private fun <T> request(call: Deferred<T>, onSuccess: ((T) -> Unit)?, onError: ((Throwable) -> Unit)?) {
+        launch(UI) {
+            try {
+                onSuccess?.let {
+                    onSuccess(call.await())
+                }
+            } catch (httpException: HttpException) {
+                // a non-2XX response was received
+                defaultError(httpException)
+            } catch (t: Throwable) {
+                // a networking or data conversion error
+                onError?.let {
+                    onError(t)
+                }
             }
+        }
     }
 }

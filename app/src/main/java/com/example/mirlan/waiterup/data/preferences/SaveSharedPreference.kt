@@ -31,12 +31,12 @@ object SaveSharedPreference{
     }
 
     fun getAccessToken(ctx: Context): String {
-        return getSharedPreferences(ctx).getString(PREF_USER_TOKEN, "")
+        return getSharedPreferences(ctx).getString(PREF_USER_TOKEN, "").toString()
     }
     fun setApiAddress(ctx: Context, apiAddress:String){
         val editor = getSharedPreferences(ctx).edit()
         editor.putString(PREF_API_ADDRESS,apiAddress)
-        editor.commit()
+        editor.apply()
     }
     fun getApiAddress(ctx: Context):String{
         return getSharedPreferences(ctx).getString(PREF_API_ADDRESS,"")

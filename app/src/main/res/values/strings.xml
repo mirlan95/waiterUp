@@ -23,5 +23,7 @@
     <string name="ordering">Заказ берүү</string>
     <string name="foodEnd">Түгөндү</string>
     <string name="errorPassword">Сыр сөз туура эмес!</string>
+    <string name="errorInt">Интернет тууралоолорду текшериңиз!</string>
+    <string name="auth">Авторизация</string>
 
 </resources>
