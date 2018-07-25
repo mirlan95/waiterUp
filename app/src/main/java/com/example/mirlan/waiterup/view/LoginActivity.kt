@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.example.mirlan.waiterup.R
 import com.example.mirlan.waiterup.api.Api
 import com.example.mirlan.waiterup.api.Network
@@ -21,8 +23,11 @@ import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
 import com.example.mirlan.waiterup.utils.LocaleManager
 import com.example.mirlan.waiterup.utils.ProgressDialog
 import org.angmarch.views.NiceSpinner
+import android.widget.TextView
+import butterknife.OnClick
 
-class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
+
+class LoginActivity : AppCompatActivity() {
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -32,41 +37,38 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         }
     }
 
-    private lateinit var mUserPassword:EditText
-    private var mUserSpinner: NiceSpinner? = null
+    private var mUserPassword: EditText? = null
     private var mUserId: Int = 0
     private var mUserName: String? = null
     private var mUserList: ArrayList<User>? = null
     private var arrayListUsers: ArrayList<String> = ArrayList()
+    private lateinit var mUserSpinner: NiceSpinner
+    private lateinit var mLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        ButterKnife.bind(this)
 
-         mUserPassword = findViewById(R.id.userPassword)
-         mUserSpinner = findViewById(R.id.spinner)
+        mUserPassword = findViewById(R.id.userPassword)
+        mLogin = findViewById(R.id.btnLogIn)
+        mLogin.setOnClickListener { logIn() }
+        mUserSpinner = findViewById(R.id.spinner)
+        mUserSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-        //mUserSpinner!!.onItemSelectedListener = this
-
-        val mButtonLoginIn = findViewById<Button>(R.id.btnLogIn)
-
-        mButtonLoginIn.setOnClickListener {
-            if(!mUserPassword.text.isEmpty()) {
-                val intent = Intent(this,MainActivity::class.java)
-                intent.putExtra("USER_NAME",mUserName)
-                startActivity(intent)
-                //var dialog = ProgressDialog.progressDialog(this)
-              //  dialog.show()
-               // validateUser(dialog)
-
-            }else {
-
-                Toast.makeText(this,resources.getString(R.string.errorPassword),Toast.LENGTH_LONG).show()
-
+                mUserId = mUserList!![0].userId
+                mUserName = mUserList!![0].name
             }
 
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-        }
+                mUserId = mUserList!![position].userId
+                mUserName = mUserList!![position].name
+            }
+
+        })
+
     }
 
     override fun onStart() {
@@ -79,31 +81,25 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
         Network.request(Api.provideApi().getWaiters(),
                 NetworkCallback<List<User>>().apply {
-                    success = {
-
-                        mUserList = ArrayList(it)
-                        arrayListUsers.add(0,resources.getString(R.string.change_spinner_name))
-                        for(i in 0 until mUserList!!.size)
-                            arrayListUsers.add(i+1,it[i].name!!)
+                    success = { mUserList = ArrayList(it)
                         init()
                     }
-                    error = {
-                      // ProgressDialog.myToast(this,R.string.errorInt.toString())
-                        Log.e("ERROOOR",it.localizedMessage) // it.  (Throwable)
-                    }
+                    error = {}
                 })
     }
 
     private fun init() {
-
+        arrayListUsers.clear()
+        arrayListUsers.add(0,resources.getString(R.string.change_spinner_name))
+        for(i in 0 until mUserList!!.size)
+            arrayListUsers.add(i+1, mUserList!![i].name!!)
         val spinnerList = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayListUsers)
-        //spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mUserSpinner!!.setAdapter(spinnerList)
+        mUserSpinner.setAdapter(spinnerList)
 
     }
     private fun validateUser(dialog: Dialog) {
 
-        Network.request(Api.provideApi().logIn(mUserId,mUserPassword.text.toString()),
+        Network.request(Api.provideApi().logIn(mUserId, mUserPassword!!.text.toString()),
                 NetworkCallback<Waiter>().apply {
                     success = {
                         setToken(it.mToken,dialog)
@@ -126,16 +122,19 @@ class LoginActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             startActivity(intent)
         }
     }
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        mUserId = mUserList!![0].userId
-        mUserName = mUserList!![0].name
-    }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    private fun logIn(){
 
-        mUserId = mUserList!![position].userId
-        mUserName = mUserList!![position].name
+        if(!mUserPassword!!.text.toString().isEmpty()) {
+            val intent = Intent(this,MainActivity::class.java)
+            intent.putExtra("USER_NAME",mUserName)
+            startActivity(intent)
 
+        }else {
+            Toast.makeText(this,resources.getString(R.string.errorPassword),Toast.LENGTH_LONG).show()
+
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

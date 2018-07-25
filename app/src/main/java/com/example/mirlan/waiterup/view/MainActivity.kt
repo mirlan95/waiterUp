@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         mUserName = intent.getStringExtra("USER_NAME")
 
         val mNewOrderBtn = findViewById<Button>(R.id.btnNewOrder)
-        val mCloseOrderBtn = findViewById<Button>(R.id.btnClosedOrder)
-        val mOpenOrderBtn = findViewById<Button>(R.id.btnOpenOrder)
+        val mClosedOrderBtn = findViewById<Button>(R.id.btnClosedOrder)
+        val mOpeningOrderBtn = findViewById<Button>(R.id.btnOpenOrder)
         val mClockOrderkBtn = findViewById<Button>(R.id.btnClockOrder)
         val mLogOutBtn = findViewById<Button>(R.id.btnLogOut)
         val mUsertxt = findViewById<TextView>(R.id.txtWaiterName)
@@ -47,11 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        mOpenOrderBtn.setOnClickListener {
+        mOpeningOrderBtn.setOnClickListener {
 
         }
 
-        mCloseOrderBtn.setOnClickListener {
+        mClosedOrderBtn.setOnClickListener {
+
+
 
         }
 

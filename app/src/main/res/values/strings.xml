@@ -27,5 +27,6 @@
     <string name="auth">Авторизация</string>
     <string name="alltxt">Баары</string>
     <string name="change_spinner_name">Атыңызды тандаңыз</string>
+    <string name="cancel">Кайтуу</string>
 
 </resources>
