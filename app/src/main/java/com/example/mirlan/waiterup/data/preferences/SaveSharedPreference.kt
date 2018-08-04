@@ -8,10 +8,21 @@ object SaveSharedPreference{
 
     private const val PREF_USER_NAME = "username"
     private const val PREF_USER_TOKEN = "password"
+    private const val PREF_USER_ID = "id"
     private const val PREF_API_ADDRESS = "http://198.162.254.0:8080"
 
     private fun getSharedPreferences(ctx: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
+    }
+
+    fun setUserId(ctx: Context,userId: Int){
+        val editor = getSharedPreferences(ctx).edit()
+        editor.putString(PREF_USER_ID, userId.toString())
+        editor.apply()
+    }
+
+    fun getUserId(ctx: Context): String {
+        return getSharedPreferences(ctx).getString(PREF_USER_ID, "")
     }
 
     fun setUserName(ctx: Context, userName: String) {

@@ -6,12 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.mirlan.waiterup.R
 import com.example.mirlan.waiterup.api.Api
@@ -22,9 +20,6 @@ import com.example.mirlan.waiterup.data.network.Waiter
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
 import com.example.mirlan.waiterup.utils.LocaleManager
 import com.example.mirlan.waiterup.utils.ProgressDialog
-import org.angmarch.views.NiceSpinner
-import android.widget.TextView
-import butterknife.OnClick
 
 
 class LoginActivity : AppCompatActivity() {
@@ -42,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
     private var mUserName: String? = null
     private var mUserList: ArrayList<User>? = null
     private var arrayListUsers: ArrayList<String> = ArrayList()
-    private lateinit var mUserSpinner: NiceSpinner
+    private lateinit var mUserSpinner: Spinner
     private lateinit var mLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,23 +46,24 @@ class LoginActivity : AppCompatActivity() {
         ButterKnife.bind(this)
 
         mUserPassword = findViewById(R.id.userPassword)
+
         mLogin = findViewById(R.id.btnLogIn)
         mLogin.setOnClickListener { logIn() }
-        mUserSpinner = findViewById(R.id.spinner)
-        mUserSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-                mUserId = mUserList!![0].userId
-                mUserName = mUserList!![0].name
-            }
+        mUserSpinner = findViewById(R.id.spinner)
+        mUserSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                 if(position != 0){
+                    mUserId = mUserList!![position-1].userId
+                    mUserName = mUserList!![position-1].name
+                }else
+                     mUserId = 0
 
-                mUserId = mUserList!![position].userId
-                mUserName = mUserList!![position].name
             }
 
-        })
+        }
 
     }
 
@@ -89,20 +85,36 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
         arrayListUsers.clear()
         arrayListUsers.add(0,resources.getString(R.string.change_spinner_name))
         for(i in 0 until mUserList!!.size)
             arrayListUsers.add(i+1, mUserList!![i].name!!)
         val spinnerList = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayListUsers)
-        mUserSpinner.setAdapter(spinnerList)
+        spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        mUserSpinner.adapter = spinnerList
 
     }
+    private fun logIn(){
+
+        val dialog = ProgressDialog.progressDialog(this)
+
+        if(!mUserPassword!!.text.toString().isEmpty()) {
+
+            dialog.show()
+            validateUser(dialog)
+
+        }else {
+            Toast.makeText(this,resources.getString(R.string.errorPassword),Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun validateUser(dialog: Dialog) {
 
         Network.request(Api.provideApi().logIn(mUserId, mUserPassword!!.text.toString()),
                 NetworkCallback<Waiter>().apply {
                     success = {
-                        setToken(it.mToken,dialog)
+                        setToken(it.mToken,it.auth,dialog)
                     }
                     error = {
                         dialog.dismiss()
@@ -112,30 +124,28 @@ class LoginActivity : AppCompatActivity() {
                 )
 
     }
-    private fun setToken(mToken: String?, dialog: Dialog) {
-        if (mToken != null) {
+    private fun setToken(mToken: String?,auth:Boolean?, dialog: Dialog) {
 
-            dialog.dismiss()
-            SaveSharedPreference.setAccessToken(this,mToken)
-            val intent = Intent(this,MainActivity::class.java)
-            intent.putExtra("USER_NAME",mUserName)
-            startActivity(intent)
-        }
-    }
+        dialog.dismiss()
 
-    private fun logIn(){
+        if (auth!! && mToken != null) {
 
-        if(!mUserPassword!!.text.toString().isEmpty()) {
+            saveUserData(mToken)
             val intent = Intent(this,MainActivity::class.java)
             intent.putExtra("USER_NAME",mUserName)
             startActivity(intent)
 
         }else {
             Toast.makeText(this,resources.getString(R.string.errorPassword),Toast.LENGTH_LONG).show()
-
-
         }
     }
+
+    private fun saveUserData(mToken: String) {
+        SaveSharedPreference.setAccessToken(this,mToken)
+        SaveSharedPreference.setUserName(this, this.mUserName!!)
+        SaveSharedPreference.setUserId(this,this.mUserId)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

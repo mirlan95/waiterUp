@@ -1,6 +1,5 @@
 package com.example.mirlan.waiterup.utils
 
-import android.app.ProgressDialog
 
 object Constants {
 

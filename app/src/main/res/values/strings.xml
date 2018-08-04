@@ -8,7 +8,7 @@
     <string name="newOrder">Жаңы заказ</string>
     <string name="clockOrder">Саат боюнча заказ</string>
     <string name="openOrder">Бүтө элек заказ</string>
-    <string name="closedOrder">Бүткөн заказ</string>
+    <string name="closedOrder">Жабык заказ</string>
     <string name="logOut">Чыгуу</string>
     <string name="ru">Русский</string>
     <string name="kg">Кыргызча</string>
@@ -28,5 +28,14 @@
     <string name="alltxt">Баары</string>
     <string name="change_spinner_name">Атыңызды тандаңыз</string>
     <string name="cancel">Кайтуу</string>
-
+    <string name="table">Стол</string>
+    <string name="floor">Зал</string>
+    <string name="som">сом</string>
+    <string name="summ">Суммасы:</string>
+    <string name="aboutOrder">Заказ боюнча маалымат</string>
+    <string name="additional_order">Кошумча заказ</string>
+    <string name="check">Чек чыгаруу</string>
+    <string name="close_order">Заказды жабуу</string>
+    <string name="success">Заказ ийгиликтүү аяктады</string>
+    <string name="last_control">Акыркы текшерүү</string>
 </resources>

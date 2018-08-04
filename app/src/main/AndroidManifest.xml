@@ -32,7 +32,13 @@
         <activity
             android:name=".view.NewOrderActivity"
             android:label="@string/newOrder" />
-        <activity android:name=".view.OrderHistoryActivity"></activity>
+        <activity
+            android:name=".view.OrderHistoryActivity"
+            />
+        <activity android:name=".view.OrderLastControlActivity"
+            android:label="@string/last_control"/>
+        <activity android:name=".view.AboutOrderActivity"
+            android:label="@string/aboutOrder"></activity>
     </application>
 
 </manifest>

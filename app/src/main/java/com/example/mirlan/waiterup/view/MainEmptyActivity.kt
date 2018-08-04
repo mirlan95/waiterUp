@@ -10,11 +10,11 @@ class MainEmptyActivity : AppCompatActivity() {
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent:Intent
-        if(SaveSharedPreference.getAccessToken(this) != "")
-            intent = Intent(this,MainActivity::class.java)
+
+        val intent:Intent = if(SaveSharedPreference.getAccessToken(this) != "")
+            Intent(this,MainActivity::class.java)
         else
-            intent = Intent(this,LoginActivity::class.java)
+            Intent(this,LoginActivity::class.java)
 
         startActivity(intent)
         finish()

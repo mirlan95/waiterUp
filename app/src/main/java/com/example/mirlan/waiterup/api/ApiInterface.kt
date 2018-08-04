@@ -1,10 +1,7 @@
 package com.example.mirlan.waiterup.api
 
 import android.database.Observable
-import com.example.mirlan.waiterup.data.network.Categories
-import com.example.mirlan.waiterup.data.network.Food
-import com.example.mirlan.waiterup.data.network.User
-import com.example.mirlan.waiterup.data.network.Waiter
+import com.example.mirlan.waiterup.data.network.*
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
 import com.example.mirlan.waiterup.view.LoginActivity.Companion.applicationContext
 import kotlinx.coroutines.experimental.Deferred
@@ -28,6 +25,18 @@ interface ApiInterface {
 
     @GET("foods")
     fun getFoods(): Deferred<List<Food>>
+
+    @GET("orders")
+    fun getOrderHistory(@Query("waiter_id") waiterId:Int,
+                        @Query("api_token") mToken:String,
+                        @Query("is_open") isOpen:Int): Deferred<List<OrderHistory>>
+
+    @GET("orders")
+    fun getOrderItems(@Query("api_token") mToken:String,
+                      @Query("waiter_id") id: Int): Deferred<List<OrderItem>>
+
+    @DELETE("orders{id}")
+    fun closeOrder(@Path("id") id: Int) : Deferred<String>
 
 
             /*  @GET("/orders{id}")

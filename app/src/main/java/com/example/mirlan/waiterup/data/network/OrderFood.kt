@@ -3,13 +3,12 @@ package com.example.mirlan.waiterup.data.network
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Waiter {
-
-    @SerializedName("auth")
+class OrderFood {
+    @SerializedName("id")
     @Expose
-    var auth: Boolean? = false
+    var id: Int = 0
 
-    @SerializedName("api_token")
+    @SerializedName("quantity")
     @Expose
-    var mToken: String? = null
+    var name: String? = null
 }
