@@ -1,6 +1,7 @@
 package com.example.mirlan.waiterup.api
 
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
+import com.example.mirlan.waiterup.utils.Constants.BASE_URL
 import com.example.mirlan.waiterup.view.LoginActivity.Companion.applicationContext
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -13,7 +14,7 @@ object Api {
 
         fun provideApi(): ApiInterface {
             return Retrofit.Builder()
-                    .baseUrl("http://mirlan.pe.hu/api/")
+                    .baseUrl(BASE_URL)
                     .client(provideOkHttpClient(provideLoggingInterceptor()))
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(CoroutineCallAdapterFactory()) // https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter

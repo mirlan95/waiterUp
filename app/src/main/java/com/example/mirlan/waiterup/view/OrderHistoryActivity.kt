@@ -59,6 +59,7 @@ class OrderHistoryActivity : AppCompatActivity() {
                     }
                     error = {
                         dialog.dismiss()
+                        msgToUser()
                     }
                 }
         )
@@ -79,6 +80,9 @@ class OrderHistoryActivity : AppCompatActivity() {
         mOrderHistoryAdapter = OrderHistoryAdapter(this.mOrderHistoryList!!)
         order_recycler.adapter = mOrderHistoryAdapter
 
+    }
+    private fun msgToUser() {
+        Toast.makeText(this,R.string.errorInt,Toast.LENGTH_LONG).show()
     }
     override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
         android.R.id.home ->{

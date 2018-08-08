@@ -69,18 +69,19 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         getUsers()
-
     }
     private fun getUsers(){
 
         Network.request(Api.provideApi().getWaiters(),
                 NetworkCallback<List<User>>().apply {
-                    success = { mUserList = ArrayList(it)
+                    success = {
+                        mUserList = ArrayList(it)
                         init()
                     }
-                    error = {}
+                    error = {
+
+                    }
                 })
     }
 
@@ -118,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     error = {
                         dialog.dismiss()
-                        //ProgressDialog.myToast(LoginActivity.applicationContext(),R.string.errorPassword.toString())
+                        msgToUser(false)
                     }
                 }
                 )
@@ -139,13 +140,19 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this,resources.getString(R.string.errorPassword),Toast.LENGTH_LONG).show()
         }
     }
+    private fun msgToUser(b: Boolean) {
+        if(b) {
+            Toast.makeText(this,R.string.success,Toast.LENGTH_LONG).show()
+            super.onBackPressed()
+        }else
+            Toast.makeText(this,R.string.errorInt,Toast.LENGTH_LONG).show()
 
+    }
     private fun saveUserData(mToken: String) {
         SaveSharedPreference.setAccessToken(this,mToken)
         SaveSharedPreference.setUserName(this, this.mUserName!!)
         SaveSharedPreference.setUserId(this,this.mUserId)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

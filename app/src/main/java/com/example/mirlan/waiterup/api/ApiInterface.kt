@@ -1,17 +1,12 @@
 package com.example.mirlan.waiterup.api
 
-import android.database.Observable
 import com.example.mirlan.waiterup.data.network.*
-import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
-import com.example.mirlan.waiterup.view.LoginActivity.Companion.applicationContext
 import kotlinx.coroutines.experimental.Deferred
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 
 interface ApiInterface {
+
     @GET("users")
     fun getWaiters() : Deferred<List<User>>
 
@@ -31,41 +26,38 @@ interface ApiInterface {
                         @Query("api_token") mToken:String,
                         @Query("is_open") isOpen:Int): Deferred<List<OrderHistory>>
 
-    @GET("orders")
-    fun getOrderItems(@Query("api_token") mToken:String,
-                      @Query("waiter_id") id: Int): Deferred<List<OrderItem>>
+    @GET("orders/{id}")
+    fun getOrderItems(@Path("id")id: Int,
+                      @Query("api_token") mToken:String,
+                      @Query("waiter_id") waiterId: Int): Deferred<List<OrderItem>>
 
-    @DELETE("orders{id}")
-    fun closeOrder(@Path("id") id: Int) : Deferred<String>
+    @DELETE("orders/{id}")
+    fun closeOrder(@Path("id") id: Int,
+                   @Query("api_token")accessToken: String) : Deferred<Boolean>
 
-
-            /*  @GET("/orders{id}")
-    fun getQuestions(@Path("id")id:Int,
-                     @Query("api_token")examId: Int,
-                     @Query("waiter_id")):Observable<>
-
-
-
-
-
-    @POST("/result")
+    @POST("orders{id}")
     @FormUrlEncoded
-    fun sendResult(@Field("result") id: Int,
-                   @Field("student_id") stuId:Int,
-                   @Field("exam_id")exId:Int,
-                   @Field("examData") exDate: String ) : Observable<StatusBack>
-                   */
+    fun updateOrder(@Field("api_token")mToken: String,
+                    @Field("waiter_id") waiterId: Int,
+                    @Field("table_id") tableId: Int,
+                    @FieldMap map:Map<Int,String>) : Deferred<OrderFood>
 
-    companion object Factory{
+    @POST("print/{id}")
+    fun printCheck(@Path("id") id:Int) : Deferred<Boolean>
 
-        fun create(): ApiInterface{
-            val requestInterface = Retrofit.Builder()
-                    .baseUrl(SaveSharedPreference.getApiAddress(applicationContext()))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-            return requestInterface.create(ApiInterface::class.java)
-        }
+    @PUT("orders{id}")
+    @FormUrlEncoded
+    fun addMoreOrder(@Field("api_token")mToken: String,
+                     @FieldMap map:Map<Int,String>) : Deferred<ExtraOrder>
 
-    }
+    @POST("orders")
+    @FormUrlEncoded
+    fun sendOrder(@Field("api_token") mToken: String,
+                  @Field("waiter_id") waiterId: Int,
+                  @Field("table_id") tableId: Int,
+                  @Field("isExternal") isExternal:Int,
+                  @Field("date") date:String,
+                  @Field("foods") list: ArrayList<Test>) : Deferred<OrderBackStatus>
+
 
 }

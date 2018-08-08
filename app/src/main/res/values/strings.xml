@@ -36,6 +36,10 @@
     <string name="additional_order">Кошумча заказ</string>
     <string name="check">Чек чыгаруу</string>
     <string name="close_order">Заказды жабуу</string>
-    <string name="success">Заказ ийгиликтүү аяктады</string>
+    <string name="success">Сиздин талабыңыз ийгиликтүү аяктады!</string>
     <string name="last_control">Акыркы текшерүү</string>
+    <string name="is_empty">Заказ тандалган жок!</string>
+    <string name="send_order_title">Заказды жөнөтүү</string>
+    <string name="send_order">Заказды жөнөтүүгө макулсузбу?</string>
+
 </resources>

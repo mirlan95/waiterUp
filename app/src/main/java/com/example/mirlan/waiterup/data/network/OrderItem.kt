@@ -34,4 +34,10 @@ class OrderItem {
     @Expose
     var updatedDate: String? = null
 
+    @SerializedName("name")
+    @Expose
+    var foodName: String? = null
+    @SerializedName("price")
+    @Expose
+    var price: Int = 0
 }

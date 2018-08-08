@@ -63,7 +63,6 @@ class FoodAdapter(private var mFoodList: ArrayList<Food>):RecyclerView.Adapter<F
 
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ViewHolder{
         val v = LayoutInflater.from(parent.context).inflate(R.layout.menu_raw, parent, false)
         this.context = parent.context
@@ -72,9 +71,8 @@ class FoodAdapter(private var mFoodList: ArrayList<Food>):RecyclerView.Adapter<F
     override fun getItemCount(): Int = mFoodList.count()
 
     fun update(filter: List<Food>?) {
-     mFoodList = ArrayList(filter)
-        // notifyDataSetChanged()
-}
+        mFoodList = ArrayList(filter)
+    }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

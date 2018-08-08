@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.widget.Button
-import android.widget.TextView
 import com.example.mirlan.waiterup.R
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,15 +19,15 @@ class MainActivity : AppCompatActivity() {
         val mNewOrderBtn = findViewById<Button>(R.id.btnNewOrder)
         val mClosedOrderBtn = findViewById<Button>(R.id.btnClosedOrder)
         val mOpeningOrderBtn = findViewById<Button>(R.id.btnOpenOrder)
-        val mClockOrderkBtn = findViewById<Button>(R.id.btnClockOrder)
+        val mClockOrderBtn = findViewById<Button>(R.id.btnClockOrder)
         val mLogOutBtn = findViewById<Button>(R.id.btnLogOut)
-        val mUsertxt = findViewById<TextView>(R.id.txtWaiterName)
+        //val mUsertext = findViewById<TextView>(R.id.txtWaiterName)
 
-        mUsertxt.text = SaveSharedPreference.getUserName(this)
+        txtWaiterName.text = SaveSharedPreference.getUserName(this)
 
         mNewOrderBtn.setOnClickListener {toOrderActivity(1)}
 
-        mClockOrderkBtn.setOnClickListener {toOrderActivity(0)}
+        mClockOrderBtn.setOnClickListener {toOrderActivity(0)}
 
         mOpeningOrderBtn.setOnClickListener { toActivity(1) }
 

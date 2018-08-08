@@ -2,6 +2,7 @@ package com.example.mirlan.waiterup.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,19 +12,28 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mirlan.waiterup.R
 import com.example.mirlan.waiterup.data.network.Food
+import com.example.mirlan.waiterup.data.network.Test
+import com.example.mirlan.waiterup.view.OrderLastControlActivity
+import com.example.mirlan.waiterup.view.OrderLastControlActivity.Companion.initTotalText
+import com.example.mirlan.waiterup.view.OrderLastControlActivity.Companion.orderArrayList
 
 class OrderAdapter(private var mOrderList: ArrayList<Food>): RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
 
     private var context: Context? = null
-    var map = HashMap<String, String>()
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.mQuantity.visibility = View.VISIBLE
-        holder.mFoodName.setTextColor(R.color.red)
         holder.mFoodName.text = mOrderList[position].name
-        holder.mQuantity.text = mOrderList[position].quantity.toString()
+
+        if(mOrderList[position].quantity > 0){
+            holder.mQuantity.text = mOrderList[position].quantity.toString()
+            holder.mQuantity.visibility = View.VISIBLE
+            holder.mFoodName.setTextColor(Color.parseColor("#ff0000"))
+        }else {
+            holder.mQuantity.visibility = View.INVISIBLE
+            holder.mFoodName.setTextColor(Color.parseColor("#000000"))
+        }
 
         holder.linear.setOnClickListener {
 
@@ -34,16 +44,25 @@ class OrderAdapter(private var mOrderList: ArrayList<Food>): RecyclerView.Adapte
             builder.setTitle(mOrderList[position].name)
             builder.setItems(numberArray) { dialog, which ->
 
-                if (numberArray[which].toInt() > 0) {
 
-                    //summ(mFoodList[position].price * numberArray[which].toInt())
-
-                    holder.mQuantity.text = numberArray[which]
-                } else {
-                   // minn(mFoodList[position].price * numberArray[which].toInt())
-
-                }
                 mOrderList[position].quantity = numberArray[which].toInt()
+                initTotalText(context as OrderLastControlActivity)
+
+                if (mOrderList[position].quantity > 0) {
+                    val k = Test(mOrderList[position].id,mOrderList[position].quantity)
+                    orderArrayList?.add(k)
+
+                    holder.mQuantity.visibility = View.VISIBLE
+                    holder.mFoodName.setTextColor(Color.parseColor("#ff0000"))
+                    holder.mQuantity.text = mOrderList[position].quantity.toString()
+
+                } else {
+
+                    //orderArrayList?.get(orderArrayList?.find { it -> it.id == mOrderList[position].id })//removeAt(0)//removeIf { it -> it.id == mOrderList[position].id }
+                    holder.mFoodName.setTextColor(Color.parseColor("#000000"))
+                    holder.mQuantity.visibility = View.GONE
+                    notifyDataSetChanged()
+                }
                 dialog.dismiss()
             }
             builder.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }

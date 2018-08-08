@@ -3,13 +3,13 @@ package com.example.mirlan.waiterup.data.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.example.mirlan.waiterup.utils.Constants
+import com.example.mirlan.waiterup.utils.Constants.PREF_API_ADDRESS
+import com.example.mirlan.waiterup.utils.Constants.PREF_USER_ID
+import com.example.mirlan.waiterup.utils.Constants.PREF_USER_NAME
+import com.example.mirlan.waiterup.utils.Constants.PREF_USER_TOKEN
 
 object SaveSharedPreference{
-
-    private const val PREF_USER_NAME = "username"
-    private const val PREF_USER_TOKEN = "password"
-    private const val PREF_USER_ID = "id"
-    private const val PREF_API_ADDRESS = "http://198.162.254.0:8080"
 
     private fun getSharedPreferences(ctx: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
@@ -17,7 +17,7 @@ object SaveSharedPreference{
 
     fun setUserId(ctx: Context,userId: Int){
         val editor = getSharedPreferences(ctx).edit()
-        editor.putString(PREF_USER_ID, userId.toString())
+        editor.putString(Constants.PREF_USER_ID, userId.toString())
         editor.apply()
     }
 

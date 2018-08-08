@@ -24,9 +24,6 @@
             android:name=".view.MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".view.SettingsActivity"
-            android:label="@string/settings" />
-        <activity
             android:name=".view.LoginActivity"
             android:label="@string/auth" />
         <activity

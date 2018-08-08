@@ -27,18 +27,14 @@ import android.app.Activity
 class NewOrderActivity : AppCompatActivity() {
 
     private lateinit var mCheckBox:CheckBox
-
     private var layoutManager: LinearLayoutManager? = null
-
     private var arrayListCategory: ArrayList<String> = ArrayList()
     private var mFoodAdapter:FoodAdapter? = null
     private var mFoodList:ArrayList<Food>? = null
     private var mCategoryList: ArrayList<Categories>? = null
-    var isAction: Int = 0
+    private var isAction: Int = 0
+    companion object { var mCategoryId: Int = 0 }
 
-    companion object {
-        var mCategoryId: Int = 0
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_order)
@@ -77,7 +73,10 @@ class NewOrderActivity : AppCompatActivity() {
 
     fun btnOrder(v:View){
         if(isAction == 1 || isAction == 0)
+            if(validateOrder())
             orderingFood()
+            else
+                Toast.makeText(this,R.string.is_empty,Toast.LENGTH_LONG).show()
         else
             backToAboutActivity()
     }
@@ -85,23 +84,27 @@ class NewOrderActivity : AppCompatActivity() {
         clearOrders()
     }
     private fun getMenu() {
+
         val dialog = ProgressDialog.progressDialog(this)
         dialog.show()
-       Network.request(Api.provideApi().getCategories(),
+        Network.request(Api.provideApi().getCategories(),
                 NetworkCallback<List<Categories>>().apply {
                     success = {
 
                         mCategoryList = ArrayList(it)
                         initSpinner()
                         getFood(dialog)
+
                     }
                     error = {
                         dialog.dismiss()
+                        msgToUser()
                     }
                 }
         )
 
     }
+
     private fun getFood(dialog: Dialog) {
 
         Network.request(Api.provideApi().getFoods(),
@@ -113,6 +116,7 @@ class NewOrderActivity : AppCompatActivity() {
                     }
                     error = {
                         dialog.dismiss()
+                        msgToUser()
                     }
                 }
         )
@@ -134,7 +138,7 @@ class NewOrderActivity : AppCompatActivity() {
     }
     private fun initRecylerView(dialog: Dialog) {
 
-        menu_recyclerview.setHasFixedSize(true)
+        menu_recyclerview.setHasFixedSize(false)
         layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         menu_recyclerview.layoutManager = layoutManager
         mFoodAdapter = FoodAdapter(this.mFoodList!!)
@@ -146,8 +150,10 @@ class NewOrderActivity : AppCompatActivity() {
 
         val intent = Intent(this,OrderLastControlActivity::class.java)
         intent.putExtra("CLOCK",isAction)
+        intent.putExtra("EXTERNAL",mCheckBox.isChecked)
         intent.putParcelableArrayListExtra("list", mFoodList)//?.filter { it -> it.quantity > 0 })
         startActivity(intent)
+
     }
 
     private fun backToAboutActivity(){
@@ -157,6 +163,12 @@ class NewOrderActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
+    private fun validateOrder():Boolean{
+        val k =  mFoodList?.find { it -> it.quantity > 0 }.toString()
+        if(k.isEmpty())
+            return false
+        return true
+    }
     private fun sortList() {
 
         if(mCategoryId == 0)
@@ -165,7 +177,9 @@ class NewOrderActivity : AppCompatActivity() {
             mFoodAdapter?.update(mFoodList?.filter { it -> it.catId == mCategoryId })
         mFoodAdapter?.notifyDataSetChanged()
     }
-
+    private fun msgToUser() {
+            Toast.makeText(this,R.string.errorInt,Toast.LENGTH_LONG).show()
+    }
 
     private fun clearOrders() {
         for(i in 0 until mFoodList!!.size)
@@ -174,17 +188,13 @@ class NewOrderActivity : AppCompatActivity() {
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
         android.R.id.home ->{
             onBackPressed()
             true
         }
         else -> false
-
     }
-
-
 }
 
 
