@@ -20,6 +20,7 @@ import com.example.mirlan.waiterup.data.network.Waiter
 import com.example.mirlan.waiterup.data.preferences.SaveSharedPreference
 import com.example.mirlan.waiterup.utils.LocaleManager
 import com.example.mirlan.waiterup.utils.ProgressDialog
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -32,23 +33,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private var mUserPassword: EditText? = null
     private var mUserId: Int = 0
     private var mUserName: String? = null
     private var mUserList: ArrayList<User>? = null
     private var arrayListUsers: ArrayList<String> = ArrayList()
     private lateinit var mUserSpinner: Spinner
-    private lateinit var mLogin: Button
+  //  private lateinit var mLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
 
-        mUserPassword = findViewById(R.id.userPassword)
-
-        mLogin = findViewById(R.id.btnLogIn)
-        mLogin.setOnClickListener { logIn() }
+        btnLogIn.setOnClickListener { logIn() }
 
         mUserSpinner = findViewById(R.id.spinner)
         mUserSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -100,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
         val dialog = ProgressDialog.progressDialog(this)
 
-        if(!mUserPassword!!.text.toString().isEmpty()) {
+        if(!userPassword!!.text.toString().isEmpty()) {
 
             dialog.show()
             validateUser(dialog)
@@ -112,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateUser(dialog: Dialog) {
 
-        Network.request(Api.provideApi().logIn(mUserId, mUserPassword!!.text.toString()),
+        Network.request(Api.provideApi().logIn(mUserId, userPassword!!.text.toString()),
                 NetworkCallback<Waiter>().apply {
                     success = {
                         setToken(it.mToken,it.auth,dialog)

@@ -11,29 +11,21 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mNewOrderBtn = findViewById<Button>(R.id.btnNewOrder)
-        val mClosedOrderBtn = findViewById<Button>(R.id.btnClosedOrder)
-        val mOpeningOrderBtn = findViewById<Button>(R.id.btnOpenOrder)
-        val mClockOrderBtn = findViewById<Button>(R.id.btnClockOrder)
-        val mLogOutBtn = findViewById<Button>(R.id.btnLogOut)
-        //val mUsertext = findViewById<TextView>(R.id.txtWaiterName)
-
         txtWaiterName.text = SaveSharedPreference.getUserName(this)
 
-        mNewOrderBtn.setOnClickListener {toOrderActivity(1)}
+        btnNewOrder.setOnClickListener {toOrderActivity(1)}
 
-        mClockOrderBtn.setOnClickListener {toOrderActivity(0)}
+        btnClockOrder.setOnClickListener {toOrderActivity(0)}
 
-        mOpeningOrderBtn.setOnClickListener { toActivity(1) }
+        btnOpenOrder.setOnClickListener { toActivity(1) }
 
-        mClosedOrderBtn.setOnClickListener { toActivity(0) }
+        btnClosedOrder.setOnClickListener { toActivity(0) }
 
-        mLogOutBtn.setOnClickListener { alertDialogShow() }
+        btnLogOut.setOnClickListener { alertDialogShow() }
 
     }
 
@@ -57,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                     clearToken()
                     val intent = Intent(this,LoginActivity::class.java)
                     startActivity(intent)
+                    finishAffinity()
                 }
         alert.show()
     }
@@ -68,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
                     super.onBackPressed()
                     finishAffinity()
-                    System.exit(0)
+                    //System.exit(0)
     }
 
 }

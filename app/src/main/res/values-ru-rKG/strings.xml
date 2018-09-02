@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WaiterUp</string>
+    <string name="logIn">Вход</string>
+    <string name="password_hint">Пароль</string>
+    <string name="settings">Настройка</string>
+    <string name="newOrder">Новый заказ</string>
+    <string name="clockOrder">Заказ по часовой</string>
+    <string name="openOrder">Открытие заказы</string>
+    <string name="closedOrder">Закрытие заказы</string>
+    <string name="logOut">Выход</string>
+    <string name="update">Обновить</string>
+    <string name="logOutTxt">Выход</string>
+    <string name="logSure">Хотите выйти из приложний</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="checkboxTxt">Внешний заказ</string>
+    <string name="ordering">Заказать</string>
+    <string name="foodEnd">Закончилось</string>
+    <string name="errorPassword">Неправильный пароль</string>
+    <string name="errorInt">Проверите интернет соединие!</string>
+    <string name="alltxt">Все</string>
+    <string name="change_spinner_name">Выберите имя</string>
+    <string name="cancel">Назад</string>
+    <string name="summ">Сумма:</string>
+    <string name="aboutOrder">Информация о заказах</string>
+    <string name="additional_order">Допольнительный заказ</string>
+    <string name="check">Чек</string>
+    <string name="close_order">Закрыть заказ</string>
+    <string name="success">Ваш запрос принять!</string>
+    <string name="last_control">Последняя проверка</string>
+    <string name="is_empty">Заказ не выбран!!</string>
+    <string name="send_order_title">Отправить заказ</string>
+    <string name="send_order">Отправить заказ?</string>
+</resources>

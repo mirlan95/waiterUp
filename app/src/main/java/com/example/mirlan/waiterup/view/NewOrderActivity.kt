@@ -26,7 +26,7 @@ import android.app.Activity
 
 class NewOrderActivity : AppCompatActivity() {
 
-    private lateinit var mCheckBox:CheckBox
+   // private lateinit var mCheckBox:CheckBox
     private var layoutManager: LinearLayoutManager? = null
     private var arrayListCategory: ArrayList<String> = ArrayList()
     private var mFoodAdapter:FoodAdapter? = null
@@ -40,7 +40,7 @@ class NewOrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_order)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        mCheckBox = findViewById(R.id.checkBox)
+       // mCheckBox = findViewById(R.id.checkBox)
 
         val extra = intent.extras
         if (extra != null) isAction = extra.get("MAIN") as Int
@@ -150,7 +150,7 @@ class NewOrderActivity : AppCompatActivity() {
 
         val intent = Intent(this,OrderLastControlActivity::class.java)
         intent.putExtra("CLOCK",isAction)
-        intent.putExtra("EXTERNAL",mCheckBox.isChecked)
+        intent.putExtra("EXTERNAL",checkBox.isChecked)
         intent.putParcelableArrayListExtra("list", mFoodList)//?.filter { it -> it.quantity > 0 })
         startActivity(intent)
 

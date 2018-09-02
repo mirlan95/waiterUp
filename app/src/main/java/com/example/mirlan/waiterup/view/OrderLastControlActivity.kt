@@ -39,7 +39,7 @@ class OrderLastControlActivity : AppCompatActivity() {
     private var date:String? = null
     private var tableId:Int = 0
     private var isChecked:Int = 0
-    private lateinit var mTableEdit:EditText
+  //  private lateinit var mTableEdit:EditText
     private var ord:Test?=null
 
     companion object {
@@ -66,7 +66,7 @@ class OrderLastControlActivity : AppCompatActivity() {
 
         val picker = findViewById<TimePicker>(R.id.timePicker)
         picker.setIs24HourView(true)
-        mTableEdit = findViewById(R.id.edit_table)
+       // mTableEdit = findViewById(R.id.edit_table)
         orderList = intent.getParcelableArrayListExtra<Food>("list")
         isClock = intent.getIntExtra("CLOCK",1)
         isChecked = if (intent.getBooleanExtra("EXTERNAL",false)) 1 else 0
@@ -100,7 +100,7 @@ class OrderLastControlActivity : AppCompatActivity() {
 
     private fun sendOrderToServer(){
 
-        tableId = Integer.parseInt(mTableEdit.text.toString().trim())
+        tableId = Integer.parseInt(edit_table.text.toString().trim())
         Toast.makeText(this,ord?.quantity.toString() + date.toString(),Toast.LENGTH_LONG).show()
 
         val dialog = ProgressDialog.progressDialog(this)
